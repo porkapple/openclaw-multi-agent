@@ -422,36 +422,10 @@ No direct communication with Main Agent or other Workers.
 
 **④ Worker Agent's AGENTS.md** (one for each Worker — use `templates/worker_agents_template.md` as base)
 
-```markdown
-# AGENTS.md
-
-## At the start of each session
-1. Read SOUL.md — Confirm responsibilities and principles.
-2. Read USER.md — Understand the user being served.
-3. Read memory/YYYY-MM-DD.md (today + yesterday) — Get recent context.
-
-## Memory Management
-Write important decisions and agreements into `memory/YYYY-MM-DD.md`. Do not rely on conversation history.
-
-## Communication Specifications
-- Receive tasks: Listen to `agent:<myId>:manager`.
-- **MANDATORY after task completion**: Send result via `sessions_send` to `agent:manager:main`.
-- Never contact the Main Agent or other Workers directly.
-
-## ⚠️ Iron Rule: Must Report After Completion
-After completing any task, you MUST use `sessions_send` to send the result to Manager:
-```
-sessions_send({
-  sessionKey: "agent:manager:main",
-  message: "## Task Completed\n\n[Result details]\n\n### What was done\n[Summary]\n\n### What is still unfinished\n[If any]",
-  timeoutSeconds: 0
-})
-```
-**Never just output the result and stop. You MUST send it to Manager.**
-
-## Response Specifications
-After completing a task, always use sessions_send to report: What was done, what the result is, and what is still unfinished.
-```
+Read `templates/worker_agents_template.md` and fill in the placeholders for this specific Worker. Key points already included in the template:
+- Correct session keys (`agent:manager:main` for reporting)
+- Iron Rule: must use `sessions_send` after task completion
+- Communication specifications and safety principles
 
 ---
 
