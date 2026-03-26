@@ -222,7 +222,15 @@ sessions_send({
 {{task_summary}}
 
 ### Quality Gate Status
-Self-check ✅ {{review_status}}
+Self-check ✅
+
+**Verification Results:**
+- Completeness: ✅ {{covers_all_requirements}}
+- Constraints met: ✅ {{constraints_satisfied}}
+- Output format: ✅ {{format_correct}}
+- Known risks: {{risks_or_none}}
+
+{{review_status}}
 
 ### Overall Progress
 {{progress_percentage}}%

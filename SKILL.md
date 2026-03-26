@@ -364,7 +364,7 @@ After the Quality Gate passes, you MUST use `sessions_send` to forward the resul
 ```
 sessions_send({
   sessionKey: "agent:main:manager",
-  message: "## Task Completed\n\n[Result summary]\n\n### Quality Gate Status\nSelf-check ✅ [Review ✅ if applicable]\n\n### Overall Progress\n100%",
+  message: "## Task Completed\n\n[Result summary]\n\n### Quality Gate Status\nSelf-check ✅\n\n**Verification Results:**\n- Completeness: ✅ [covers all requirements]\n- Constraints met: ✅ [constraints satisfied]\n- Output format: ✅ [format correct]\n- Known risks: [none or description]\n\n[Review ✅ if applicable]\n\n### Overall Progress\n100%",
   timeoutSeconds: 0
 })
 ```
