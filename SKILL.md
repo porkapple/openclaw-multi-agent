@@ -8,15 +8,19 @@ metadata:
   openclaw:
     requires:
       config:
-        - ~/.openclaw/openclaw.json
-        - ~/.openclaw/workspace/USER.md
-        - ~/.openclaw/workspace/memory/
-        - ~/.openclaw/workspace-*/SOUL.md
-        - ~/.openclaw/workspace-*/AGENTS.md
+        - ~/.openclaw/openclaw.json           # Read + Write: adds agents.list and agentToAgent.allow entries
+        - ~/.openclaw/workspace/USER.md       # Read: used during planning interview to understand user context
+        - ~/.openclaw/workspace/memory/       # Read: reads daily logs and wisdom files for team planning context
+        - ~/.openclaw/workspace-*/SOUL.md     # Read + Write: creates/verifies sub-agent persona files
+        - ~/.openclaw/workspace-*/AGENTS.md   # Read + Write: creates/verifies sub-agent behavior files
       bins:
         - bash
         - openclaw
     homepage: https://github.com/porkapple/openclaw-multi-agent
+    permissions:
+      sessions_history: "Read: Manager quality gate reads agent session history to verify workers sent proper sessions_send reports"
+      file_write: "Writes SOUL.md, AGENTS.md to ~/.openclaw/workspace-<id>/ when creating sub-agents; updates openclaw.json agents.list and agentToAgent.allow with user approval"
+      scripts: "scripts/*.sh run locally only, no network calls, no data exfiltration — review before executing"
 ---
 
 # Multi-Agent Orchestration
