@@ -940,7 +940,9 @@ EOF
 # - 设置默认模型
 
 # Step 4: 重启OpenClaw Gateway
-openclaw gateway restart
+# ⚠️ AI cannot execute this — it would kill the current session
+# Please run manually in your terminal:
+# openclaw gateway restart
 
 # Step 5: 验证Agents注册
 openclaw agents list

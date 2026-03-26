@@ -445,7 +445,7 @@ EOF
     echo "  - Persona: $MANAGER_PERSONA"
     echo "  - Workspace: $MANAGER_DIR"
     echo "  - Session Key (Main → Manager): agent:$MANAGER_ID:main"
-    echo "  - Session Key (Workers → Manager): agent:manager:<worker_id>"
+    echo "  - Session Key (Workers → Manager): agent:manager:main  # Workers report to Manager using this key"
 }
 
 create_manager_soul() {
@@ -833,7 +833,7 @@ sessions_send(
 
 \`\`\`typescript
 sessions_send(
-  sessionKey="agent:manager:<worker_id>",
+  sessionKey="agent:manager:main"  # Worker reports to Manager,
   message="状态汇报",
   timeoutSeconds=0
 )
@@ -1033,7 +1033,7 @@ sessions_send(
 \`\`\`typescript
 // 我向 Manager 汇报
 sessions_send(
-  sessionKey="agent:manager:$worker_id",
+  sessionKey="agent:manager:main",  # ⚠️ Always use agent:manager:main, NOT agent:manager:<worker_id>
   message="状态汇报 + 结果/问题",
   timeoutSeconds=0
 )
@@ -1076,7 +1076,7 @@ EOF
 
 **与 Manager 的通信：**
 - 接收任务：\`sessions_receive\` on \`agent:$worker_id:manager\`
-- 汇报状态：\`sessions_send\` to \`agent:manager:$worker_id\`
+- 汇报状态：\`sessions_send\` to \`agent:manager:main\`  # ⚠️ 必须用 agent:manager:main
 - 绝不直接联系 Main Agent 或其他 Workers
 
 ---
@@ -1144,7 +1144,7 @@ sessions_send(
 
 \`\`\`typescript
 sessions_send(
-  sessionKey="agent:manager:$worker_id",
+  sessionKey="agent:manager:main",  # ⚠️ Always use main
   message="状态汇报",
   timeoutSeconds=0
 )
@@ -1246,7 +1246,7 @@ generate_team_design_document() {
     for worker in "${WORKERS[@]}"; do
         IFS='|' read -r id persona category model <<< "$worker"
         session_keys+="| Manager → $id | \`agent:$id:manager\` | 任务分配 |\n"
-        session_keys+="| $id → Manager | \`agent:manager:$id\` | 状态汇报 |\n"
+        session_keys+="| $id → Manager | \`agent:manager:main\` | 状态汇报 (⚠️ always main) |\n"
     done
     
     cat > "$TEAM_DESIGN_FILE" << EOF
@@ -1371,7 +1371,7 @@ Manager Agent
     │ sessions_send to agent:<worker>:manager
     ▼
 Worker Agents (并行执行)
-    │ sessions_send to agent:manager:<worker>
+    │ sessions_send to agent:manager:main
     ▼
 Manager Agent (聚合结果)
     │ sessions_send to agent:main:$MANAGER_ID

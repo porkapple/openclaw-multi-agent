@@ -699,7 +699,7 @@ EOF
 
 **与 Manager 的通信：**
 - 接收任务：`sessions_receive` on `agent:<worker>:manager`
-- 汇报状态：`sessions_send` to `agent:manager:<worker>`
+- 汇报状态：`sessions_send` to `agent:manager:main`  # ⚠️ 必须用 agent:manager:main，不是 agent:manager:<worker>
 - 绝不直接联系 Main Agent 或其他 Workers
 AGENTS_EOF
     echo "✅ Created AGENTS.md"
