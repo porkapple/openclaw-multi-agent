@@ -529,7 +529,7 @@ For each agent created, read its SOUL.md and AGENTS.md and verify the following 
 
 | # | Check Item | What to Look For |
 |---|---|---|
-| 1 | Session key is correct | `agent:<myId>:manager` for reporting, `agent:manager:main` for receiving — not reversed |
+| 1 | Session key is correct | `agent:<myId>:manager` for **receiving tasks**, `agent:manager:main` for **reporting results** — not reversed |
 | 2 | No direct Main contact | Does NOT instruct to contact Main Agent directly |
 | 3 | Memory instruction present | Mentions writing to `memory/YYYY-MM-DD.md` |
 
