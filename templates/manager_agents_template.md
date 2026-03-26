@@ -102,9 +102,17 @@ sessions_send(
 
 ## Quality Gates
 
+### Step 0: Verify Worker Actually Sent sessions_send
+
+**Before checking content quality, first verify the Worker properly reported via sessions_send.**
+
+Check that a formal `sessions_send` message was received from the Worker (in `sessions_history` for `agent:manager:main`). If the Worker only output text in their session but did NOT send via sessions_send, their task is NOT complete — ask them to resend.
+
+> ⚠️ Worker outputting results ≠ Worker reporting results. Only a `sessions_send` to `agent:manager:main` counts as a formal handover.
+
 ### Worker Output Acceptance Process
 
-After a Worker completes a task, it must pass through quality gates:
+After confirming the Worker sent a proper sessions_send, check content quality:
 
 ```markdown
 ## Quality Gate Checklist
@@ -145,14 +153,26 @@ sessions_send(
   sessionKey="agent:main:manager",
   message=`📊 Task Status Report
 
-## Task Completed
-{{task_summary}}
+## Task: {{task_name}}
+## Progress: {{progress_percentage}}%
+## Status: ✅ Completed
 
-### Quality Gate Status
-Self-check ✅ {{review_status}}
+### Quality Gate: ✅ Self-check Passed
 
-### Overall Progress
-{{progress_percentage}}%`,
+**Verification Details:**
+| Check Item | Result |
+|-----------|--------|
+| {{check_item_1}} | ✅ {{result_1}} |
+| {{check_item_2}} | ✅ {{result_2}} |
+| {{check_item_3}} | ⚠️ {{result_3_if_partial}} |
+
+**Worker Status:**
+| Worker | Status | Output |
+|--------|--------|--------|
+| {{worker_name}} | ✅ Done | {{deliverable}} |
+
+**Remaining Issues:**
+{{remaining_issues_or_none}}`,
   timeoutSeconds=0
 )
 
