@@ -271,6 +271,8 @@ Output the following four parts:
 
 > ⚠️ Please replace the model fields with the actual available models you read in Chapter 3. Do not directly copy model names from the examples.
 
+> 💡 The `name` field (display name) is entirely up to the user — use any name you like. The persona archetype is defined in SOUL.md and is independent of the display name.
+
 ```json5
 {
   agents: {
